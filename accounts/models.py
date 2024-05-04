@@ -15,6 +15,14 @@ class User(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
     objects = UserManager()
+    is_active = models.BooleanField(
+        _("active"),
+        default=False,
+        help_text=_(
+            "Designates whether this user should be treated as active. "
+            "Unselect this instead of deleting accounts."
+        ),
+    )
 
     def __str__(self):
         if self.first_name:
@@ -36,6 +44,7 @@ class VerificationOtp(models.Model):
     code = models.IntegerField(_("Otp code"), validators=[check_otp_code])
     type = models.CharField(_("Verification Type"), max_length = 30, choices = VERIFY_TYPE.choices)
     expires_in = models.DateTimeField(_("Expires time"))
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.user.email} {self.code}"

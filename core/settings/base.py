@@ -33,6 +33,8 @@ LOCAL_APPS = [
 
 THIRD_PARTY_APPS = [
     'rest_framework',
+    'rest_framework_simplejwt',
+    'drf_spectacular',
 ]
 
 INSTALLED_APPS = LOCAL_APPS + THIRD_PARTY_APPS
@@ -137,10 +139,21 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'abduqodirdusmurodov@gmail.com'
 EMAIL_HOST_PASSWORD = 'igpfqllsgbdjrgle'
 
-VERIFY_OTP_CODE_TIME = 2
+VERIFY_OTP_CODE_TIME = 5
 
 
+REST_FRAMEWORK = {
+    # YOUR SETTINGS
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
 
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'E-commerce project',
+    'DESCRIPTION': 'this is by mohirdev project',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}
 
 
 
