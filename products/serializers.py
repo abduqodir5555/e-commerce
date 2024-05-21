@@ -14,3 +14,13 @@ class ProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ('id', 'name', 'price', 'category', 'in_stock', 'brand', 'discount', 'thumbnail')
+
+
+class ProductColorSerializer(serializers.Serializer):
+    colour = MediaSerializer(read_only=True)
+    id = serializers.IntegerField()
+
+
+class ProductSizeSerializer(serializers.Serializer):
+    value = serializers.CharField()
+    id = serializers.IntegerField()

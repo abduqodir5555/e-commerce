@@ -6,12 +6,16 @@ from django.utils.translation import gettext_lazy as _
 
 class CartItem(models.Model):
     user = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name="cart_items")
-    # product = models.ForeignKey('products.Product', on_delete=models.CASCADE, related_name="cart_items")
+    product = models.ForeignKey('products.Product', on_delete=models.CASCADE, related_name="cart_items")
     quantity = models.IntegerField(_("quantity"))
     subtotal = models.FloatField(_("subtotal"))
 
     def __str__(self):
         return f"User Id: {self.user.id}|Product: {self.product.name}"
+
+    def save(self, *args, **kwargs):
+        self.quantity = self.subtotal * self.product.price
+        super(CartItem, self).save(*args, **kwargs)
 
 
 class Card(models.Model):

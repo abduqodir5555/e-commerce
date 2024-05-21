@@ -5,7 +5,8 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 
 from .models import User, VerificationOtp
-from .utils import generate_code, send_email
+from .tasks import send_otp_code_to_email
+from .utils import generate_code
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
@@ -22,7 +23,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
                 sms.expires_in = datetime.now() + settings.OTP_CODE_ACTIVATION_TIME
                 code = generate_code()
                 sms.code = code
-                send_email(code=code, email=user.email)
+                send_otp_code_to_email(code=code, email=user.email)
         else:
             user = super(UserCreateSerializer, self).create(validated_data)
             return user

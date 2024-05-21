@@ -37,6 +37,7 @@ THIRD_PARTY_APPS = [
     'drf_spectacular',
     'mptt',
     'ckeditor',
+    'django_filters',
 ]
 
 INSTALLED_APPS = LOCAL_APPS + THIRD_PARTY_APPS
@@ -87,6 +88,18 @@ DATABASES = {
         'PORT': config("PORT")
     }
 }
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
+
 
 
 # Password validation
@@ -144,11 +157,6 @@ EMAIL_HOST_PASSWORD = 'igpfqllsgbdjrgle'
 VERIFY_OTP_CODE_TIME = 5
 
 
-REST_FRAMEWORK = {
-    # YOUR SETTINGS
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-}
-
 SPECTACULAR_SETTINGS = {
     'TITLE': 'E-commerce project',
     'DESCRIPTION': 'this is by mohirdev project',
@@ -168,6 +176,12 @@ CKEDITOR_CONFIGS = {
 }
 MPTT_ADMIN_LEVEL_INDENT = 20
 
-
+CELERY_BROKER_URL = "redis://127.0.0.1:6379"
+CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379"
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_TIMEZONE = "Asia/Tashkent"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 
